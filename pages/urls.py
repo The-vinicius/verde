@@ -5,5 +5,5 @@ app_name = 'pages'
 
 
 urlpatterns = [
-	path('home/', HomePage.as_view(), name='home'),
+	path('', HomePage.as_view(), name='home'),
 ]
