@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # my apps
-    'user.apps.UserConfig'
+    'user.apps.UserConfig',
+    'events.apps.EventsConfig',
+    'auditlog.apps.AuditlogConfig'
 ]
 
 MIDDLEWARE = [
@@ -52,7 +54,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'audit_log.middleware.UserLoggingMiddleware',
 ]
 
 ROOT_URLCONF = 'green.urls'
@@ -145,10 +146,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # model user
 
 AUTH_USER_MODEL = 'user.CustomUser'
-
-
-# redirect for home
-
-LOGIN_REDIRECT_URL = 'pages:home'
-
-LOGOUT_REDIRECT_URL = 'pages:home'
