@@ -1,2 +1,6 @@
-Django==4.0
+Django==3.2
 psycopg2-binary==2.8.6
+django-autoslug==1.9.8
+pillow==8.0.1
+django-environ==0.4.5
+django-auditlog==1.0a1
