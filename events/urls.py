@@ -6,5 +6,6 @@ app_name = 'events'
 
 
 urlpatterns = [
-	path('', EventListView.as_view(), name='list')
+	path('', EventListView.as_view(), name='list'),
+	path('<slug:slug>/', EventDetailSlugView.as_view(), name='detail')
 	]
