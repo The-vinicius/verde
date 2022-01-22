@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from green.utils import unique_slug_generator
 from django.db.models.signals import pre_save
 from auditlog.registry import auditlog
@@ -16,12 +17,9 @@ class Event(models.Model):
 	def __str__(self):
 		return self.title
 
+	def get_absolute_url(self):
+		return reverse('events:detail', kwargs={'slug': self.slug})
+
 # registro de auditoria
 
 auditlog.register(Event)
-
-def event_pre_save_receiver(sender, instance, *args, **kwargs):
-    if not instance.slug:
-        instance.slug = unique_slug_generator(instance)
-
-pre_save.connect(event_pre_save_receiver, sender=Event)
