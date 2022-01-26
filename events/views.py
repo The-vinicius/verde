@@ -28,5 +28,7 @@ class EventDetailSlugView(DetailView):
 			instace = Event.objects.get(slug = slug)
 		except Event.DoesNotExist:
 			raise Http404('Não encontrado!')
-
+		except Event.MultipleObjectsReturned:
+			qs = Event.objects.filter(slug = slug)
+			instace = qs.first()
 		return instace
