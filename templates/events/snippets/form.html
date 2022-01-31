@@ -1,0 +1,6 @@
+<form method="POST" action="{% url 'events:add_user' %}" class="form"> {% csrf_token %}
+	<input type="hidden" name="next" value="{{ next_url }}">
+	<input type="hidden" name="user_id" value="{{ user_id }}">
+	<input type="hidden" name="slug" value="{{ slug }}">
+	<button type="submit" class="btn">participar</button>	
+</form>
