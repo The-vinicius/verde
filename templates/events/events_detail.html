@@ -1,8 +1,21 @@
 {% extends 'base.html' %}
 
+{% block title %} {{ object.slug }} green {% endblock %}
 
 {% block content %}
 	<h1>{{ object.title }}</h1>
 	<p>{{ object.description | linebreaks }}</p>
 	{{ object.timestamp | timesince }} Atrás
+
+	{% if request.user not in object.participantes.all %}
+	{% include 'events/snippets/form.html' with next_url=request.build_absolute_uri user_id=request.user.id slug=object.slug %}
+	{% else %}
+		<p>você está participando!</p>
+	{% endif %}
+
+	{% if total %}
+		<p>{{ total }} de participantes </p>
+	{% else %}
+		<p>Não há participantes</p>
+	{% endif %}
 {% endblock %}
