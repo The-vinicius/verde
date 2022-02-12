@@ -20,10 +20,11 @@
 <div class="col-lg-9">
     {% for obj in event_list %}
         <div class="row" style="margin-bottom: 20px;">
-            <div class="card" style="height: 200px; width: 100%;">
+            <div class="card" style="height: 250px; width: 100%;">
                 <div class="card-body">
                     <h5 class="card-title">{{ obj.title }}</h5>
                     <p class="card-text">{{ obj.description|truncatewords:14 }}</p>
+                    <p>{{ obj.participantes.count }} {% if obj.participantes.count <= 1%} participante {% else %} participantes {% endif %}</p>
                     <a href="{{ obj.get_absolute_url }}" class="btn btn-primary">Detalhe</a>
                 </div>
             </div>
