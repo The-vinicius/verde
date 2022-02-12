@@ -66,4 +66,4 @@ def add_user_event(request):
 		if url_has_allowed_host_and_scheme(redirect_path, request.get_host()):
 			return redirect(redirect_path)
 
-	return Redirect('/events/')
+	return redirect('/events/')
