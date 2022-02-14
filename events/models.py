@@ -4,7 +4,7 @@ from green.utils import unique_slug_generator
 from django.db.models.signals import pre_save
 from django.conf import settings
 from auditlog.registry import auditlog
-from autoslug import AutoSlugField
+from autoslug import AutoSlugField	
 
 
 User = settings.AUTH_USER_MODEL
