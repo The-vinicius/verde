@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 from events.models import Event
 
@@ -6,7 +6,7 @@ class UserQuerySet(models.query.QuerySet):
     def events_user(self, user):
         return Event.objects.filter(participantes=user)
 
-class UserManager(models.Manager):
+class UserManager(UserManager):
     def get_queryset(self):
         return UserQuerySet(self.model, using=self._db)
 
