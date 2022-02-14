@@ -16,6 +16,7 @@ class UserManager(models.Manager):
 
 class CustomUser(AbstractUser):
     objects = UserManager()
+    image = models.ImageField(upload_to='user/img/', null = True, blank = True)
 
 
     def __str__(self):
