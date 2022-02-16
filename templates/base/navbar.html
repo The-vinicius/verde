@@ -1,4 +1,9 @@
 {% load static %}
+
+{% block base_head %}
+    <link rel='stylesheet' href='{% static "css/drop.css" %}'>
+{% endblock base_head%}
+
 {% url 'pages:home' as home %}
 {% url 'events:list' as events %}
 
@@ -7,7 +12,14 @@
     <a class="navbar-brand" href="#"><h1>Green</h1></a>
     <div class="d-flex justify-content-lg-end justify-content-end justify-content-sm-end col-lg-3 col-sm-8 col-6">
         {% if request.user.is_authenticated %}
-          <a class="btn btn-danger" href="{% url 'logout' %}">Logout</a> 
+          <div class="dropdown">
+            <button onclick="myFunction()" class="dropbtn"><img src="">{{request.user.username}}</button>
+            <div id="myDropdown" class="dropdown-content">
+              <a href="#">Link 1</a>
+              <a href="#">Link 2</a>
+              <a href="{% url 'logout' %}">logout</a>
+            </div>
+          </div> 
         {% else %}
           <a class="btn btn-success" href="{% url 'login' %}">Login</a>
         {% endif %}
@@ -39,3 +51,5 @@
     </div>
   </div>
 </nav>
+
+<script src="{% static 'js/drop.js' %}"></script>
