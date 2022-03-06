@@ -17,7 +17,7 @@
               <img src="{% static 'img/149753.jpg' %}" style="height: 42px; width: 42px; border-radius: 30px; margin-bottom: 10px;">
             </a>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li><a class="dropdown-item" href="{% url 'accounts:profile' %}">perfil</a></li>
+              <li><a class="dropdown-item" href="{% url 'accounts:profile' name=request.user.username %}">perfil</a></li>
               <li><a class="dropdown-item" href="#">contar</a></li>
               <li><a class="dropdown-item" href="{% url 'logout' %}">logout</a></li>
             </ul>
