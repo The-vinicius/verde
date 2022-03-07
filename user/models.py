@@ -17,7 +17,6 @@ class UserManager(UserManager):
 class CustomUser(AbstractUser):
     objects = UserManager()
 
-
     def __str__(self):
         return self.username
 
@@ -26,6 +25,21 @@ class CustomUser(AbstractUser):
 
 # user profile
 
+class ProfileManager(models.Manager):
+    def get_or_create(self, request):
+        user = request.user
+        qs = self.get_queryset().filter(user=user)
+        if qs.count() == 1:
+            profile = qs.first()
+        else:
+            profile = self.model.objects.create(user=user)
+
+        return profile
+
+
 class UserProfile(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
     image = models.ImageField(upload_to='user/img/', null=True, blank=True)
+
+    def __str__(self):
+        return self.user.username
