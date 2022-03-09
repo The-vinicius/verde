@@ -14,20 +14,21 @@ class SignUpView(CreateView):
 
 
 def user_profile_view(request, name):
-    profile = UserProfile.objects.get_or_create(request)
+    profile = UserProfile.objects.get_or_new(request)
+    
     if request.method == 'POST':
 
         form = UserImageForm(request.POST, request.FILES)
 
         if form.is_valid():
-            profile[0].image = form.cleaned_data['image']
-            profile[0].save()
+            profile.image = form.cleaned_data['image']
+            profile.save()
     else:
         form = UserImageForm()
 
     context = {
             'form':form,
-            'profile': profile[0]
+            'profile': profile
     }
 
     return render(request, 'profile/profile.html', context)
