@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load green_extras %}
 <!-- {% block base_head %}
     <link rel='stylesheet' href='{% static "css/drop.css" %}'>
 {% endblock base_head%} -->
@@ -14,7 +14,7 @@
         {% if request.user.is_authenticated %}
         <div class="dropdown">
           <a class="btn dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" >
-              <img src="{% static 'img/149753.jpg' %}" style="height: 42px; width: 42px; border-radius: 30px; margin-bottom: 10px;">
+              <img src="{% get_photo_user request=request %}" style="height: 42px; width: 42px; border-radius: 30px; margin-bottom: 10px;">
             </a>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               <li><a class="dropdown-item" href="{% url 'accounts:profile' name=request.user.username %}">perfil</a></li>
