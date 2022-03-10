@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+	<div>
+		{% if profile.image %}
+			<img src="{{ profile.image.url }}" class="img-fluid" style="width: 300px; height: 300px;">
+		{% else %}
+			<img src="{% static 'img/149753.jpg' %}" class="img-fluid" style="width: 300px; height: 300px;">
+		{% endif %}
+	</div>
+{% endblock %}
