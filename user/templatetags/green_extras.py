@@ -7,7 +7,7 @@ register = template.Library()
 
 @register.simple_tag()
 def get_photo_user(request):
-	profile = UserProfile.objects.get_or_new(request)
+	profile, obj  = UserProfile.objects.get_or_create(user=request.user)
 
 	if profile.image:
 		return profile.image.url
