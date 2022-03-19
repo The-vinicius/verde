@@ -11,7 +11,7 @@
 	</div>
 	<form method="post" enctype="multipart/form-data">
 		{% csrf_token %}
-    		{{ form }}
+    		{{ form.image }}
 		<button type='submit' class='btn btn-default'>Enviar</button>
 	</form>
 {% endblock %}
