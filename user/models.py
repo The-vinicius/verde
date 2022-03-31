@@ -1,17 +1,8 @@
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
-from events.models import Event
+from django.urls import reverse
 
-class UserQuerySet(models.query.QuerySet):
-    def events_user(self, user):
-        return Event.objects.filter(participantes=user)
 
-class UserManager(UserManager):
-    def get_queryset(self):
-        return UserQuerySet(self.model, using=self._db)
-
-    def event_set(self, user):
-        return self.get_queryset().events_user(user)
 
 # custom user
 class CustomUser(AbstractUser):
@@ -21,23 +12,43 @@ class CustomUser(AbstractUser):
         return self.username
 
 
+LEAGUE_OPTIONS = (
+    ('L1', 'god'),
+    ('L2', 'gold'),
+    ('L3', 'silver'),
+    ('L4', 'bronze'),
+    ('L5', 'no league')
+)
+
 
 # user profile
-
-class ProfileManager(models.Manager):
-    def get_or_new(self, request):
-        user = request.user
-        qs = self.get_queryset().filter(user=user)
-        if qs.count() == 1:
-            return user.userprofile
-        else:
-            return self.model.objects.create(user=user)
-
-
 class UserProfile(models.Model):
+
+    LEAGUE_OPTIONS = (
+    ('L1', 'god'),
+    ('L2', 'gold'),
+    ('L3', 'silver'),
+    ('L4', 'bronze'),
+    ('L5', 'no league')
+    )
+
+    GENDER_OPTIONS = (
+        ('M', 'male'),
+        ('F', 'female')
+    )
+
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
     image = models.ImageField(upload_to='user/img/', null=True, blank=True)
-    objects = ProfileManager()
+    bio = models.TextField(max_length=500, null=True, blank=True)
+    points = models.IntegerField(default=0, null=True, blank=True)
+    ranking = models.IntegerField(default=0, null=True, blank=True)
+    league = models.TextField(choices=LEAGUE_OPTIONS, default='L5', max_length=2, blank=True)
+    gender = models.TextField(choices=GENDER_OPTIONS, default='M', max_length=1, blank=True)
+    wallet = models.CharField(max_length=100, blank=True, null=True)
+
 
     def __str__(self):
         return self.user.username
+
+    def get_absolute_url(self):
+        return reverse('accounts:profile', kwargs={'username': self.user.username})
