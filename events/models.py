@@ -5,13 +5,15 @@ from django.db.models.signals import pre_save
 from django.conf import settings
 from auditlog.registry import auditlog
 from autoslug import AutoSlugField	
+#model de perfil de usuário
+from user.models import UserProfile
 
-
+#model user
 User = settings.AUTH_USER_MODEL
 
 class Event(models.Model):
 	admin = models.ForeignKey(User, related_name='admin', on_delete=models.CASCADE, blank=True, null=True)
-	participantes = models.ManyToManyField(User,related_name='participantes', blank=True)
+	entry = models.ManyToManyField(UserProfile, blank=True)
 	title = models.CharField(max_length=255)
 	slug = AutoSlugField(unique=True, always_update=False, populate_from="title")
 	description = models.TextField()
@@ -28,6 +30,6 @@ class Event(models.Model):
 	def get_absolute_url(self):
 		return reverse('events:detail', kwargs={'slug': self.slug})
 
-# registro de auditoria
+#registro de auditoria
 
 auditlog.register(Event)
