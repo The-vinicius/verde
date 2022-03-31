@@ -2,11 +2,64 @@
 {% load static %}
 
 {% block content %}
-	<div>
-		{% if profile.image %}
-			<img src="{{ profile.image.url }}" class="img-fluid" style="width: 300px; height: 300px;">
-		{% else %}
-			<img src="{% static 'img/149753.jpg' %}" class="img-fluid" style="width: 300px; height: 300px;">
-		{% endif %}
+	<div class="row">
+		<div class="col-12 col-xl-4 col-md-4">
+			<div class="col-12 mb-4">
+				<div class="card border-dark text-center p-0">
+					<div class="card-body p-5">
+					{% if profile.image %}
+						<img src="{{ profile.image.url }}" class="user-avatar large-avatar border rounded-circle mx-auto mt-n7 mb-4" style="width: 200px; height: 200px;">
+					{% else %}
+						<img src="{% static 'img/149753.jpg' %}" class="img-fluid" style="width: 300px; height: 300px;">
+					{% endif %}
+					</div>
+					<div class="card-footer">{{user.username}}</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 col-xl-8 col-md-8">
+				<div class="mb-4">
+					<label>bio</label>
+					<p style="font-size: 1.875em;">{{profile.bio}}</p>
+					<p>ranking {{profile.ranking}}</p>
+				</div>
+		</div>
+		<!-- <div>
+			{% if user.is_authenticated and user == profile.user %}
+			<a href="{% url 'accounts:edit-profile' %}">
+				<span class="btn-danger btn">Edit Profile</span>
+			</a>
+			{% endif %}
+		</div> -->
+	</div>
+	<div class="row">
+		<h4>Evento</h4>
+		<div class="col-12">
+			<nav class="navbar">
+				
+				<a class="nav-link border col-4" href="">
+					<span>Ganhos</span>
+				</a>
+				<a class="nav-link border col-4" href="">
+					<span>participando</span>
+				</a>
+				<a class="nav-link border col-4" href="">
+					<span>todos</span>
+				</a>
+			</nav>
+		</div>
+		<div class="col-12">
+			<div class="card">
+				<ul class="list-group">
+				{% for event in profile.event_set.all%}
+					<li class="list-group-item">
+						<a href="{{ event.get_absolute_ur}}">
+							<span>{{event.title}}</span>
+						</a>
+					</li>
+				{% endfor %}
+				</ul>
+			</div>
+		</div>
 	</div>
 {% endblock %}
