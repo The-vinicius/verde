@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'django.forms',
     # my apps
     'user.apps.UserConfig',
     'events.apps.EventsConfig',
@@ -59,6 +59,8 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'green.urls'
 
 TEMPLATE_DIR = os.path.join(BASE_DIR,"templates")
+
+FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 
 TEMPLATES = [
     {
