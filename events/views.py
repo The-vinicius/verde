@@ -2,9 +2,8 @@ from django.views.generic import ListView, DetailView
 from django.shortcuts import redirect, render 
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from .models import Event
-from user.models import CustomUser
+from user.models import UserProfile
 from django.utils.http import url_has_allowed_host_and_scheme
-
 
 class EventListView(ListView):
 	queryset = Event.objects.all() 
@@ -22,9 +21,9 @@ class EventDetailSlugView(DetailView):
 
 	def get_context_data(self, *args, **kwargs):
 		context = super(EventDetailSlugView, self).get_context_data(*args, **kwargs)
-		slug = self.kwargs.get('slug')
-		qs = self.get_object()
-		context['total'] = qs.participantes.count()
+		print(context)
+		if self.request.user.is_authenticated:
+			context['profile'] = UserProfile.objects.get(user=self.request.user)
 		return context
 
 	def get_object(self, *args, **kwargs):
@@ -44,7 +43,7 @@ class EventDetailSlugView(DetailView):
 		if request.user.is_authenticated:
 			return add_user_event(request)
 		else:
-			return redirect('/accounts/login/')
+			return redirect('/users/login/')
 
 def add_user_event(request):
 	slug = request.POST.get('slug')
@@ -57,12 +56,12 @@ def add_user_event(request):
 
 	if user_id is not None:
 		try:
-			user_entry = CustomUser.objects.get(id=user_id)
-		except CustomUser.DoesNotExist:
+			user_entry = UserProfile.objects.get(user__id=user_id)
+		except UserProfile.DoesNotExist:
 			redirect('/login/')
 		else:
 			qs = Event.objects.get(slug=slug)
-			qs.participantes.add(user_entry)
+			qs.entry.add(user_entry)
 		if url_has_allowed_host_and_scheme(redirect_path, request.get_host()):
 			return redirect(redirect_path)
 
