@@ -2,13 +2,14 @@
 
 {% block title %} {{ object.slug }} green {% endblock %}
 
+
 {% block content %}
 	<h1>{{ object.title }}</h1>
 	<p>{{ object.description | linebreaks }}</p>
 	<p style="color: rgb(128, 128, 128);">Publicado há {{ object.timestamp | timesince }} Atrás</p>
 		<div class="col-lg-2 col-md-2 col-sm-2 col-4">
-			{% if total %}
-				<p class="text-center" style="color: white;background-color: #198754; border-color: #198754; border-radius: 5px;">{{ total }} {% if total <= 1%} participante {% else %} participantes {% endif %}</p>
+			{% if event.entry.count %}
+				<p class="text-center" style="color: white;background-color: #198754; border-color: #198754; border-radius: 5px;">{{ event.entry.count }} {% if event.entry.count <= 1%} participante {% else %} participantes {% endif %}</p>
 			{% else %}
 				<p class="btn-block">Não há participantes</p>
 			{% endif %}
@@ -21,7 +22,7 @@
 		{% endif %}
 		</div>
 		<div class="d-flex justify-content-end">
-			{% if request.user not in object.participantes.all %}
+			{% if profile not in object.entry.all %}
 			{% include 'events/snippets/form.html' with next_url=request.build_absolute_uri user_id=request.user.id slug=object.slug %}
 			{% endif %}
 		</div>
