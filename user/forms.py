@@ -19,6 +19,20 @@ class CustomUserChangeForm(UserChangeForm):
         model = CustomUser
         fields = ('username', 'email')
 
-class UserImageForm(forms.Form):
-    image = forms.ImageField()
+
+class CustomClearableFileInput(forms.FileInput):
+    template_name = 'widgets/customclearablefileinput.html'
+
+
+class CustomTextArea(forms.TextInput):
+    template_name = 'widgets/customtextarea.html'
+
+
+class EditProfileForm(forms.ModelForm):
+    image = forms.ImageField(label='Profile Photo',required=False, widget=CustomClearableFileInput)
+    bio = forms.CharField(widget=CustomTextArea(attrs={'class':'form-control'}),  max_length=260, required=False)
+    wallet = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Endereço bitcoin'}), required=False)
+    class Meta:
+        model = UserProfile
+        fields = ('image', 'bio', 'gender', 'wallet')
         
